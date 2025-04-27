@@ -1,0 +1,169 @@
+/* Global Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: linear-gradient(to bottom right, #dbeafe, #e0f2fe);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+}
+
+/* Header / Navbar */
+header {
+  width: 100%;
+  max-width: 800px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px 20px 0 0;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+  color: #2563eb;
+}
+
+.logo span {
+  color: #111827;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #1e293b;
+  font-size: 15px;
+}
+
+.nav-links a.active {
+  font-weight: 600;
+}
+
+/* Translator Container */
+.translator-section {
+  width: 100%;
+}
+
+.translator-container {
+  width: 100%;
+  max-width: 800px;
+  background: #f8fbff;
+  padding: 40px 30px;
+  border-radius: 0 0 25px 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+/* Heading */
+.translator-container h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 30px;
+}
+
+/* Language Dropdowns */
+.language-selectors {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+select {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 15px;
+  background-color: #f1f5f9;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Text Cards */
+.card {
+  background-color: #f1f5f9;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-size: 16px;
+  padding-left: 10px;
+  color: #1e293b;
+}
+
+.icon-label {
+  font-size: 22px;
+  color: #3b82f6;
+}
+
+/* Translate Button */
+.translate-btn {
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  padding: 14px 0;
+  font-size: 18px;
+  font-weight: 600;
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background 0.3s;
+}
+
+.translate-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Camera Upload Button */
+.camera-btn {
+  background: #ffffff;
+  padding: 12px 20px;
+  border: 2px solid #cbd5e1;
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1e293b;
+  cursor: pointer;
+  transition: background 0.3s, border 0.3s;
+}
+
+.camera-btn:hover {
+  background-color: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+/* Status Message */
+#scanStatus {
+  margin-top: 10px;
+  font-size: 14px;
+  font-style: italic;
+  color: #6b7280;
+}

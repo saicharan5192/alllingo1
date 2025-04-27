@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Translator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #ffffff;
+  color: #333;
+}
+
+/* Navbar Styles */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 20px 60px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0077b6;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #0077b6;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+  color: #023e8a;
+  border-bottom: 2px solid #023e8a;
+}
+
+/* Hero Section with Wave Background */
+.hero {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  background: linear-gradient(to bottom right, #caf0f8, #ffffff);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  background: url('https://www.svgrepo.com/show/430670/wave-bottom.svg') no-repeat bottom center;
+  background-size: cover;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: #023e8a;
+}
+
+.hero-content p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  background-color: #0077b6;
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #023e8a;
+}
+
+    .translator-container {
+      max-width: 600px;
+      margin: 100px auto;
+      background: linear-gradient(to bottom right, #e0f2ff, #ffffff);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .lang-select {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .lang-select select {
+      padding: 10px 15px;
+      border-radius: 12px;
+      border: none;
+      background-color: #f0f0f0;
+      font-size: 16px;
+    }
+    .input-box, .output-box {
+      display: flex;
+      flex-direction: column;
+      background-color: #f4faff;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+    textarea {
+      flex: 1;
+      resize: none;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      outline: none;
+    }
+    button.translate-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background-color: #0077b6;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-bottom: 10px;
+    }
+    button.translate-btn:hover {
+      background-color: #023e8a;
+    }
+    .camera-btn {
+      padding: 12px 25px;
+      border-radius: 12px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">AllLingo.F1F4</div>
+      <ul class="nav-links">
+        <li><a href="/"  class="active">Home</a></li>
+        <li><a href="/translator">Translator</a></li>
+        <li><a href="/how-it-works">How It Works</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="translator-container">
+    <h2>Summarize & Translate</h2>
+    <div class="lang-select">
+      <select id="sourceLang" disabled>
+        <option value="en" selected>English</option>
+      </select>
+      <span>→</span>
+      <select id="targetLang"></select>
+    </div>
+
+    <div class="input-box">
+      <button onclick="startVoiceInput()">🎤 Speak</button>
+      <textarea id="inputText" rows="4" placeholder="Enter text here..."></textarea>
+    </div>
+
+    <button class="translate-btn" onclick="summarizeAndTranslate()">Summarize & Translate</button>
+
+    <div class="output-box">
+      <label for="summaryText">Summary (EN):</label>
+      <textarea id="summaryText" rows="3" readonly></textarea>
+    </div>
+
+    <div class="output-box">
+      <label for="translatedSummaryText">Translated Summary:</label>
+      <textarea id="translatedSummaryText" rows="3" readonly></textarea>
+      <button onclick="speakTranslated()">🔊 Play</button>
+    </div>
+
+    <button class="camera-btn" onclick="useCameraInput()">📷 Upload Image</button>
+    <input type="file" accept="image/*" id="imageInput" style="display: none;" onchange="handleImageUpload(event)" />
+  </div>
+
+  <script>
+    const languages = {
+      "af": "Afrikaans", "sq": "Albanian", "am": "Amharic", "ar": "Arabic", "hy": "Armenian",
+      "az": "Azerbaijani", "eu": "Basque", "be": "Belarusian", "bn": "Bengali", "bs": "Bosnian",
+      "bg": "Bulgarian", "ca": "Catalan",  "zh-CN": "Chinese (Simplified)", "hr": "Croatian", "cs": "Czech",
+      "da": "Danish", "nl": "Dutch", "en": "English", "fi": "Finnish", "fr": "French",
+      "de": "German", "el": "Greek", "gu": "Gujarati", "hi": "Hindi", "it": "Italian",
+      "ja": "Japanese", "kn": "Kannada", "ko": "Korean", "la": "Latin", "ml": "Malayalam",
+      "mr": "Marathi", "ne": "Nepali", "pa": "Punjabi", "pt": "Portuguese", "ru": "Russian",
+      "es": "Spanish", "ta": "Tamil", "te": "Telugu", "th": "Thai", "tr": "Turkish",
+      "ur": "Urdu", "vi": "Vietnamese"
+    };
+
+    let lastTranslatedText = "";
+    let lastTranslatedLang = "";
+
+    window.onload = function () {
+      const targetSelect = document.getElementById("targetLang");
+      for (const [code, name] of Object.entries(languages)) {
+        if (code !== "en") {
+          const option = document.createElement("option");
+          option.value = code;
+          option.textContent = name;
+          targetSelect.appendChild(option);
+        }
+      }
+    };
+
+    function startVoiceInput() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.start();
+      recognition.onresult = function (event) {
+        document.getElementById('inputText').value = event.results[0][0].transcript;
+      };
+    }
+
+    async function summarizeAndTranslate() {
+      const input = document.getElementById('inputText').value;
+      const target = document.getElementById('targetLang').value;
+
+      if (!input || !target) {
+        alert("Please enter text and select a target language.");
+        return;
+      }
+
+      const response = await fetch('/summarize_translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: input, targetLang: target })
+      });
+
+      const result = await response.json();
+
+      if (result.error) {
+        alert("Error: " + result.error);
+        return;
+      }
+
+      document.getElementById('summaryText').value = result.summary;
+      document.getElementById('translatedSummaryText').value = result.translatedSummary;
+
+      lastTranslatedText = result.translatedSummary;
+      lastTranslatedLang = target;
+    }
+
+    async function speakTranslated() {
+  if (!lastTranslatedText || !lastTranslatedLang) {
+    alert("Please translate the text first.");
+    return;
+  }
+
+  const response = await fetch('/speak', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text: lastTranslatedText, lang: lastTranslatedLang })
+  });
+
+  const result = await response.json();
+
+  if (result.audio_url) {
+    const audio = new Audio(result.audio_url + '?t=' + new Date().getTime());
+    try {
+      await audio.play();
+    } catch (err) {
+      console.error("Audio play failed:", err);
+      alert("Playback failed. Try clicking the play button again.");
+    }
+  } else {
+    alert(result.error || "TTS generation failed.");
+  }
+}
+
+
+    function useCameraInput() {
+      document.getElementById('imageInput').click();
+    }
+
+    async function handleImageUpload(event) {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch('/ocr', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+      document.getElementById('inputText').value = result.text;
+    }
+  </script>
+  
+  
+</body>
+</html>

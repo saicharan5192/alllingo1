@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real-Time Language Translator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #ffffff;
+  color: #333;
+}
+
+/* Navbar Styles */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 20px 60px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0077b6;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #0077b6;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+  color: #023e8a;
+  border-bottom: 2px solid #023e8a;
+}
+
+/* Hero Section with Wave Background */
+.hero {
+  height: 90vh;
+  padding: 0 20px;
+  background: linear-gradient(to bottom right, #caf0f8, #ffffff);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  background: url('https://www.svgrepo.com/show/430670/wave-bottom.svg') no-repeat bottom center;
+  background-size: cover;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: #023e8a;
+}
+
+.hero-content p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  background-color: #0077b6;
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #023e8a;
+}
+
+
+</style>
+<body>
+  <header>
+    <nav>
+      <div class="logo">AllLingo.F1F4</div>
+      <ul class="nav-links">
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/translator">Translator</a></li>
+        <li><a href="/how-it-works">How It Works</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section style="padding: 60px 20px; background-color: #f0f8ff;">
+    <div style="max-width: 1000px; margin: auto;">
+      <h2 style="text-align: center; font-size: 36px; color: #023e8a; margin-bottom: 40px;">How It Works</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px;">
+  
+        <!-- Step 1: Summarize & Translate -->
+        <div style="background: #ffffff; border-radius: 20px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center;">
+          <img src="https://cdn-icons-png.flaticon.com/512/3884/3884305.png" alt="Summarization + Translation" style="height: 100px; margin-bottom: 20px;">
+          <h3 style="color: #0077b6;">1. Summarize & Translate</h3>
+          <p>Enter long content. It gets summarized with AI, then translated into your desired language instantly.</p>
+        </div>
+  
+        <!-- Step 2: Speak (Text-to-Speech) -->
+        <div style="background: #ffffff; border-radius: 20px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center;">
+          <img src="https://cdn-icons-png.flaticon.com/512/1656/1656850.png" alt="Voice Output" style="height: 100px; margin-bottom: 20px;">
+          <h3 style="color: #0077b6;">2. Voice Output</h3>
+          <p>Listen to the translated result using our built-in text-to-speech feature powered by gTTS.</p>
+        </div>
+  
+        <!-- Step 3: OCR from Image -->
+        <div style="background: #ffffff; border-radius: 20px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center;">
+          <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="OCR from Image" style="height: 100px; margin-bottom: 20px;">
+          <h3 style="color: #0077b6;">3. Extract Text from Image</h3>
+          <p>Upload an image with text. Our OCR engine detects and extracts it for further translation.</p>
+        </div>
+  
+        <!-- Step 4: Real-Time Output -->
+        <div style="background: #ffffff; border-radius: 20px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center;">
+          <img src="https://cdn-icons-png.flaticon.com/512/9838/9838915.png" alt="Instant Output" style="height: 100px; margin-bottom: 20px;">
+          <h3 style="color: #0077b6;">4. Real-Time Output</h3>
+          <p>Get the final result in text or audio — translated, summarized, and ready to use in seconds.</p>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  
+  <footer style="background-color: #0077b6; color: white; padding: 20px 0; text-align: center;">
+    <p>&copy; 2025 AllLingo.F1F4 | All rights reserved.</p>
+  </footer>
+  
+  
+
+
+
+</body>
+</html>
